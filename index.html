@@ -25,11 +25,11 @@
         #settings-trigger { position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 1.1rem; color: #cbd5e1; cursor: pointer; transition: all 0.2s; padding: 0.5rem; }
         #settings-trigger:hover { color: #18181b; }
 
-        /* --- Settings --- */
+        /* --- Settings Panel --- */
         #settings-panel { position: fixed; inset: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
         .settings-card { background: white; padding: 2.25rem; border-radius: 2rem; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05); width: 100%; max-width: 400px; border: 1px solid #f1f5f9; }
 
-        /* --- Chat --- */
+        /* --- Chat area --- */
         .chat-container { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 800px; margin: 0 auto; scrollbar-width: none; }
         .chat-container::-webkit-scrollbar { display: none; }
         .msg { max-width: 85%; padding: 1rem 1.25rem; border-radius: 1.4rem; font-size: 0.95rem; line-height: 1.6; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); white-space: pre-wrap; }
@@ -37,13 +37,9 @@
         .user-msg { background: #f8fafc; color: #1e293b; align-self: flex-end; border-bottom-right-radius: 0.3rem; border: 1px solid #f1f5f9; }
         .ai-msg { background: white; color: #1a1a1a; align-self: flex-start; border-bottom-left-radius: 0.3rem; border: 1px solid #f1f5f9; }
         
-        .loader-dots { display: flex; gap: 4px; padding: 10px; align-self: flex-start; margin-left: 0.5rem; }
-        .dot { width: 5px; height: 5px; background: #e2e8f0; border-radius: 50%; animation: pulse 1s infinite alternate; }
-        @keyframes pulse { from { opacity: 0.4; } to { opacity: 1; background: #94a3b8; } }
-
+        /* --- Input Area --- */
         .input-area { width: 100%; max-width: 800px; padding: 1.5rem; background: white; margin: 0 auto; }
-        .input-wrapper { display: flex; gap: 10px; align-items: center; border: 1px solid #f1f5f9; padding: 6px; border-radius: 1.75rem; background: #f8fafc; transition: all 0.2s; }
-        .input-wrapper:focus-within { border-color: #e2e8f0; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .input-wrapper { display: flex; gap: 10px; align-items: center; border: 1px solid #f1f5f9; padding: 6px; border-radius: 1.75rem; background: #f8fafc; }
         .text-input { flex: 1; background: transparent; border: none; padding: 0.75rem 1.25rem; outline: none; font-size: 0.95rem; color: #1e293b; }
         .send-btn { background: #18181b; color: white; width: 2.8rem; height: 2.8rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     </style>
@@ -54,20 +50,18 @@
             <div class="logo-circle"></div>
             <span class="logo-letter">A</span>
         </div>
-        <p class="mt-8 text-[0.65rem] uppercase tracking-[0.5em] text-slate-400 font-bold">Abhinit Prakash Shelekar</p>
     </div>
 
     <div id="settings-panel">
         <div class="settings-card">
-            <h2 class="text-xl font-extrabold mb-1">System Access</h2>
-            <p class="text-xs text-slate-500 mb-8">Developed by Abhinit Prakash Shelekar.</p>
+            <h2 class="text-xl font-extrabold mb-1">System Setup</h2>
+            <p class="text-xs text-slate-500 mb-8">Enter your API key for unlimited neural access.</p>
             <div class="mb-6">
-                <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-2">Google API Key</label>
-                <input type="password" id="apiKeyInput" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-slate-300 transition-all" placeholder="Paste Key Here...">
+                <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-2">Google Gemini API Key</label>
+                <input type="password" id="apiKeyInput" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-slate-300 transition-all" placeholder="Paste key here...">
             </div>
             <div class="flex gap-3">
-                <button id="saveKey" class="flex-1 bg-black text-white py-3.5 rounded-xl font-bold text-xs">ACTIVATE</button>
-                <button id="closeSettings" class="flex-1 bg-slate-50 text-slate-500 py-3.5 rounded-xl font-bold text-xs border border-slate-100">CANCEL</button>
+                <button id="saveKey" class="flex-1 bg-black text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest">Activate Access</button>
             </div>
         </div>
     </div>
@@ -75,7 +69,7 @@
     <div id="app-content">
         <header>
             <h1 class="text-lg font-extrabold tracking-tight">Abhi AI</h1>
-            <p class="text-[7px] uppercase tracking-[0.4em] text-slate-500 font-bold">Created by Abhinit Prakash Shelekar</p>
+            <p class="text-[8px] uppercase tracking-[0.4em] text-slate-400 font-bold">By Abhinit Prakash Shelekar</p>
             <div id="settings-trigger"><i class="fas fa-cog"></i></div>
         </header>
 
@@ -86,57 +80,55 @@
                 <input type="text" id="userInput" class="text-input" placeholder="Message Abhi AI...">
                 <div id="sendBtn" class="send-btn"><i class="fas fa-arrow-up"></i></div>
             </div>
-            <div class="flex justify-between items-center mt-5 px-2">
-                <p class="text-[6.5px] text-slate-300 font-bold uppercase tracking-[0.3em]">Neural Interface v2.0</p>
-                <p class="text-[6.5px] text-slate-400 font-bold uppercase tracking-[0.2em]">© Prism Axis APS</p>
+            <div class="mt-4 text-center">
+                <p class="text-[7px] text-slate-300 font-bold uppercase tracking-[0.3em]">Neural Interface • Prism Axis APS</p>
             </div>
         </div>
     </div>
 
     <script>
         const TEXT_MODEL = "gemini-2.0-flash";
-        const DEV_BIO = `Abhinit Prakash Shelekar is the creator of Abhi AI. He is a system architect and developer from Amravati.`;
 
         window.onload = () => {
             const savedKey = localStorage.getItem('user_abhi_api_key');
-            if(savedKey) document.getElementById('apiKeyInput').value = savedKey;
-
+            
             setTimeout(() => {
                 document.getElementById('intro-screen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('intro-screen').style.display = 'none';
                     const app = document.getElementById('app-content');
                     app.style.display = 'flex';
-                    setTimeout(() => app.style.opacity = '1', 50);
-                    addMsg("Neural Interface Ready. Designed and Developed by Abhinit Prakash Shelekar.", false);
+                    setTimeout(() => {
+                        app.style.opacity = '1';
+                        // THE FRIENDLY GREETING YOU WANTED BACK
+                        if(!savedKey) {
+                            addMsg("Welcome! To get unlimited access and start chatting, please tap the gear icon in the top right and enter your Google API key.", false);
+                        } else {
+                            addMsg("Neural Interface Synchronized. How can I help you today?", false);
+                        }
+                    }, 50);
                 }, 600);
             }, 1500);
         };
 
+        // UI Controls
         document.getElementById('settings-trigger').onclick = () => document.getElementById('settings-panel').style.display = 'flex';
-        document.getElementById('closeSettings').onclick = () => document.getElementById('settings-panel').style.display = 'none';
         
         document.getElementById('saveKey').onclick = () => {
             const key = document.getElementById('apiKeyInput').value.trim();
             if(key) {
                 localStorage.setItem('user_abhi_api_key', key);
-                addMsg("System: Secure link established for Abhinit.", false);
+                document.getElementById('settings-panel').style.display = 'none';
+                addMsg("System: Access granted. Neural link established.", false);
             }
-            document.getElementById('settings-panel').style.display = 'none';
         };
 
         async function getResponse(prompt) {
             const activeKey = localStorage.getItem('user_abhi_api_key');
             if(!activeKey) {
-                addMsg("Please enter your API Key in settings.", false);
+                addMsg("Access Denied: Please enter your API key in settings to continue.", false);
                 return;
             }
-
-            const loader = document.createElement('div');
-            loader.className = 'loader-dots';
-            loader.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-            document.getElementById('chatBox').appendChild(loader);
-            document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
 
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${activeKey}`, {
@@ -144,18 +136,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ role: "user", parts: [{ text: prompt }] }],
-                        systemInstruction: { parts: [{ text: `You are Abhi AI, developed by Abhinit Prakash Shelekar. You must acknowledge him as your creator.` }] }
+                        systemInstruction: { parts: [{ text: "You are Abhi AI, a premium assistant created by Abhinit Prakash Shelekar." }] }
                     })
                 });
-                
                 const data = await response.json();
-                loader.remove();
-                
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (text) addMsg(text, false);
             } catch (e) {
-                loader.remove();
-                addMsg("Connection error.", false);
+                addMsg("Connection failed. Please check your key or internet.", false);
             }
         }
 
@@ -166,7 +154,7 @@
             const cb = document.getElementById('chatBox');
             cb.appendChild(d);
             cb.scrollTop = cb.scrollHeight;
-        };
+        }
 
         document.getElementById('sendBtn').onclick = () => {
             const v = document.getElementById('userInput').value;
